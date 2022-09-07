@@ -2,6 +2,28 @@ import pycountry
 import string
 
 
+class IbanValidationError(ValueError):
+    pass
+
+
+class IbanInvalidCharactersError(IbanValidationError):
+    def __init__(self, account, *args):
+        super().__init__(args)
+        self.account = account
+
+    def __str__(self):
+        return f"The IBAN account provided ({self.account}) contains non-alphanumeric characters."
+
+
+class IbanTooLongError(IbanValidationError):
+    def __init__(self, account, *args):
+        super().__init__(args)
+        self.account = account
+
+    def __str__(self):
+        return f"The IBAN account provided ({self.account}) has {len(self.account)} characters and the maximum allowed is 34."
+
+
 class Iban:
     """
     Stores an IBAN number and provides some checking and validation functionality
@@ -10,11 +32,16 @@ class Iban:
     def __init__(self, account: str):
         # IBAN number can only be digits and characters...
         if not account.isalnum():
-            raise ValueError(
-                "The account number should only contain digits and characters."
-            )
+            raise IbanInvalidCharactersError(account)
+
+        # IBAN number can not be more than 34 alphanumeric characters
+        if len(account) > 34:
+            raise IbanTooLongError(account)
 
         self.iban = account.upper()
+
+    def __str__(self):
+        return self.iban[:4] + " " + self.iban[4:]
 
     def validate(self):
         """
