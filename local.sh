@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export FLASK_APP=./index.py
+export FLASK_APP=./app.py
 export FLASK_DEBUG=True
 
 source $(pipenv --venv)/bin/activate
