@@ -83,4 +83,4 @@ def test_invalid_check_digits(iban_bad_account_check_digits):
 
     assert iban_bad_account_check_digits["digits"] == iban_check_digits
     assert iban_bad_check_digits != iban_check_digits
-    assert iban.is_correct()
+    assert not iban.is_correct()
