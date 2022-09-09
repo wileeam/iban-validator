@@ -28,7 +28,7 @@ def create_app(test_config=None):
                 account_data = request.args.get("account", type=str)
 
                 # Instantiate an Iban object and validate it
-                if account_data:
+                if account_data and len(account_data) > 0:
                     try:
                         account = Iban(account_data)
                     except (
@@ -42,6 +42,8 @@ def create_app(test_config=None):
                         else:
                             # TODO: Consider reporting the reason
                             res = {account.iban: "NOTOK"}
+                else:
+                    res = {account_data: "NOTOK"}
             else:
                 abort(400, "Parameter account is missing in URL.")
 
