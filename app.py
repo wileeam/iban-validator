@@ -50,10 +50,11 @@ def create_app(test_config=None):
         elif request.method == "POST":
             abort(405, "Request method not yet supported")
             data = request.get_json()
-            if data is not None:
-                iban = data["iban"]
+            if data is not None and "account" in data:
+                account_data = data["account"]
+                # TODO: Move functionality of "GET" to a function and call it in both places
         else:
-            abort(405)
+            abort(405, "Request method not allowed")
 
     @app.errorhandler(400)
     def resource_not_found(e):
