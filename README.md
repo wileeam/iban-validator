@@ -27,6 +27,17 @@ If you just want to launch the application via `Docker`, do the following instea
 ./bootstrap.sh
 ```
 
+## Test
+To test the application, simply do the following,
+```bash
+pipenv install pytest
+pytest
+```
+If you want to run specific tests, do as follows,
+```bash
+pytest tests/test_iban.py
+```
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
